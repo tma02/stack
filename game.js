@@ -9,6 +9,7 @@ stack.gameCycle = function() {
   if (stack.run) {
     var lastBlock = stack.getLastBlock();
     Crafty.viewport.y = 271 - lastBlock.getLastBlock().y;
+    stack.tapElement.y = -Crafty.viewport.y;
     Crafty.viewport.x = 200 - ((lastBlock.getLastBlock().x) + (lastBlock.getLastBlock().w / 2));
     if (!lastBlock.move) {
       if (lastBlock.x > lastBlock.getLastBlock().x) {
@@ -76,16 +77,13 @@ stack.spawnBlock = function() {
     g = Math.floor(lastBlock._green + (Math.random() * 10) - 5);
     b = Math.floor(lastBlock._blue + (Math.random() * 10) - 5);
   }
-  var block = Crafty.e('2D, Canvas, Color, Keyboard, Touch')
+  var block = Crafty.e('2D, Canvas, Color, Keyboard')
     .attr({i: stack.blocks.length, x: x, y: y, w: w, h: 30, right: right, move: true})
     .color(r, g, b)
     .bind('KeyDown', function(e) {
       if(e.key == Crafty.keys.SPACE) {
         this.move = false;
       }
-    })
-    .bind('TouchStart', function() {
-      this.move = false;
     });
   block.getLastBlock = function() {
     return stack.blocks[this.i - 1];
@@ -104,6 +102,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
   Crafty.e('2D, Canvas, Color')
     .attr({x: -512, y: 512, w: 1424, h: 286})
     .color('#eeeeee');
+  stack.tapElement = Crafty.e('2D, Canvas, Color, Mouse')
+    .attr({x: -512, y: 0, w: 1424, h: 540})
+    .color(0, 0, 0, 0)
+    .bind('MouseDown', function() {
+      stack.getLastBlock().move = false;
+    });
   stack.spawnBlock();
   stack.gameCycleInterval = setInterval(stack.gameCycle, 10);
 });
