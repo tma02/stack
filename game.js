@@ -76,13 +76,16 @@ stack.spawnBlock = function() {
     g = Math.floor(lastBlock._green + (Math.random() * 10) - 5);
     b = Math.floor(lastBlock._blue + (Math.random() * 10) - 5);
   }
-  var block = Crafty.e('2D, Canvas, Color, Keyboard')
+  var block = Crafty.e('2D, Canvas, Color, Keyboard, Touch')
     .attr({i: stack.blocks.length, x: x, y: y, w: w, h: 30, right: right, move: true})
     .color(r, g, b)
     .bind('KeyDown', function(e) {
       if(e.key == Crafty.keys.SPACE) {
         this.move = false;
       }
+    })
+    .bind('TouchStart', function() {
+      this.move = false;
     });
   block.getLastBlock = function() {
     return stack.blocks[this.i - 1];
