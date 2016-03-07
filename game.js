@@ -20,6 +20,7 @@ stack.gameCycle = function() {
         lastBlock.x = lastBlock.getLastBlock().x;
       }
       if (lastBlock.w <= 0) {
+        lastBlock.w = 0;
         stack.run = false;
       }
       else {
