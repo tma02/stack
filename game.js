@@ -8,7 +8,7 @@ stack.blocks = [];
 stack.gameCycle = function() {
   if (stack.run) {
     var lastBlock = stack.getLastBlock();
-    Crafty.viewport.y = 256 - lastBlock.getLastBlock().y;
+    Crafty.viewport.y = 271 - lastBlock.getLastBlock().y;
     Crafty.viewport.x = 200 - ((lastBlock.getLastBlock().x) + (lastBlock.getLastBlock().w / 2));
     if (!lastBlock.move) {
       if (lastBlock.x > lastBlock.getLastBlock().x) {
